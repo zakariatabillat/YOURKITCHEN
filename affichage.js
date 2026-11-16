@@ -1,5 +1,7 @@
 
 const zoneRecettes = document.querySelector("#recettes");
+const zoneCompteur = document.querySelector("#compteur");
+
 
 function creerCarte(recette) {
   const carte = document.createElement("article");
@@ -31,6 +33,14 @@ function creerCarte(recette) {
 }
 
 
+function afficherCompteur(nombre) {
+  if (nombre > 1) {
+    zoneCompteur.textContent = nombre + " recettes affichées";
+  } else {
+    zoneCompteur.textContent = nombre + " recette affichée";
+  }
+}
+
 function afficherRecettes(recettes) {
   zoneRecettes.innerHTML = "";
 
@@ -38,4 +48,6 @@ function afficherRecettes(recettes) {
     const carte = creerCarte(recette);
     zoneRecettes.appendChild(carte);
   });
+
+  afficherCompteur(recettes.length);
 }
