@@ -65,3 +65,50 @@ main {
 .carte p:last-child {
   padding-bottom: 14px;
 }
+
+/* Barre de recherche */
+#form-recherche {
+  display: flex;
+  gap: 8px;
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+#champ-recherche {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+#form-recherche button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #e67e22;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+/* Message quand la recherche ne trouve rien */
+#aucun-resultat {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#aucun-resultat p {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+#btn-toutes {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #e67e22;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}

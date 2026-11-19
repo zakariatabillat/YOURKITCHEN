@@ -1,8 +1,13 @@
-
+// Zone de la page où les cartes s'affichent
 const zoneRecettes = document.querySelector("#recettes");
+
+// Zone de la page où le nombre de recettes s'affiche
 const zoneCompteur = document.querySelector("#compteur");
 
+// Zone du message "Aucune recette trouvée"
+const zoneAucunResultat = document.querySelector("#aucun-resultat");
 
+// Construit une carte pour une recette
 function creerCarte(recette) {
   const carte = document.createElement("article");
   carte.className = "carte";
@@ -32,7 +37,7 @@ function creerCarte(recette) {
   return carte;
 }
 
-
+// Affiche le nombre de recettes
 function afficherCompteur(nombre) {
   if (nombre > 1) {
     zoneCompteur.textContent = nombre + " recettes affichées";
@@ -41,6 +46,16 @@ function afficherCompteur(nombre) {
   }
 }
 
+// Montre ou cache le message "Aucune recette trouvée"
+function afficherMessageVide(nombre) {
+  if (nombre === 0) {
+    zoneAucunResultat.hidden = false;
+  } else {
+    zoneAucunResultat.hidden = true;
+  }
+}
+
+// Affiche une liste de recettes dans la page
 function afficherRecettes(recettes) {
   zoneRecettes.innerHTML = "";
 
@@ -50,4 +65,5 @@ function afficherRecettes(recettes) {
   });
 
   afficherCompteur(recettes.length);
+  afficherMessageVide(recettes.length);
 }

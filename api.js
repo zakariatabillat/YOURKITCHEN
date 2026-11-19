@@ -18,3 +18,10 @@ async function getRecettes() {
 // If the server does not answer within 5 seconds, 
 // Axios rejects the request, the error comes out at the await line, 
 // and my catch block shows the message Serveur injoignable.”
+
+async function rechercherRecettes(motCle) {
+  const response = await api.get("/recipes/search", {
+    params: { q: motCle }
+  });
+  return response.data;
+}

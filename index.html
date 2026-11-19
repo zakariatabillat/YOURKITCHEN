@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YOURKITCHEN - Carnet de recettes</title>
 
-  
   <link rel="stylesheet" href="style.css">
 
-  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
@@ -19,11 +17,27 @@
   </header>
 
   <main>
+    <form id="form-recherche">
+      <input
+        type="search"
+        id="champ-recherche"
+        placeholder="Rechercher une recette (ex : pizza)"
+        aria-label="Rechercher une recette"
+      >
+      <button type="submit">Rechercher</button>
+    </form>
+
     <p id="compteur"></p>
+
+    <div id="aucun-resultat" hidden>
+      <p>Aucune recette trouvée</p>
+      <button type="button" id="btn-toutes">Voir toutes les recettes</button>
+    </div>
+
     <div id="recettes"></div>
   </main>
 
-  
+
   <script src="api.js"></script>
   <script src="validation.js"></script>
   <script src="affichage.js"></script>
