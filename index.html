@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YOURKITCHEN - Carnet de recettes</title>
-
   <link rel="stylesheet" href="style.css">
-
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
@@ -17,6 +15,35 @@
   </header>
 
   <main>
+    <!-- Formulaire d'ajout -->
+    <form id="form-ajout">
+      <h2>Proposer une recette</h2>
+
+      <label for="nom">Nom</label>
+      <input type="text" id="nom">
+      <p class="erreur" id="erreur-nom"></p>
+
+      <label for="cuisine">Cuisine</label>
+      <input type="text" id="cuisine" placeholder="ex : Italian">
+      <p class="erreur" id="erreur-cuisine"></p>
+
+      <label for="difficulte">Difficulté</label>
+      <select id="difficulte">
+        <option value="">-- Choisir --</option>
+        <option value="Easy">Facile</option>
+        <option value="Medium">Moyenne</option>
+        <option value="Hard">Difficile</option>
+      </select>
+      <p class="erreur" id="erreur-difficulte"></p>
+
+      <label for="temps">Temps de préparation (minutes)</label>
+      <input type="number" id="temps">
+      <p class="erreur" id="erreur-temps"></p>
+
+      <button type="submit" id="btn-ajouter">Ajouter</button>
+    </form>
+
+    <!-- Barre de recherche -->
     <form id="form-recherche">
       <input
         type="search"
@@ -36,7 +63,6 @@
 
     <div id="recettes"></div>
   </main>
-
 
   <script src="api.js"></script>
   <script src="validation.js"></script>
