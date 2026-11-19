@@ -16,3 +16,8 @@ async function rechercherRecettes(motCle) {
   });
   return response.data;
 }
+
+async function ajouterRecette(recette) {
+  const response = await api.post("/recipes/add", recette);
+  return response.data;
+}

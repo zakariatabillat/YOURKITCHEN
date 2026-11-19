@@ -2,12 +2,14 @@ const zoneRecettes = document.querySelector("#recettes");
 const zoneCompteur = document.querySelector("#compteur");
 const zoneAucunResultat = document.querySelector("#aucun-resultat");
 
+const IMAGE_PAR_DEFAUT = "https://dummyjson.com/image/400x300?text=Nouvelle+recette";
+
 function creerCarte(recette) {
   const carte = document.createElement("article");
   carte.className = "carte";
 
   const photo = document.createElement("img");
-  photo.src = recette.image;
+  photo.src = recette.image || IMAGE_PAR_DEFAUT;
   photo.alt = "Photo de la recette " + recette.name;
 
   const nom = document.createElement("h2");
@@ -59,7 +61,16 @@ function afficherRecettes(recettes) {
   afficherMessageVide(recettes.length);
 }
 
-// Écrit chaque erreur sous son champ, ou vide la zone
+// Place la nouvelle carte en tête de la grille
+function ajouterCarteEnPremier(recette) {
+  const carte = creerCarte(recette);
+  zoneRecettes.prepend(carte);
+
+  const nombre = zoneRecettes.children.length;
+  afficherCompteur(nombre);
+  afficherMessageVide(nombre);
+}
+
 function afficherErreurs(erreurs) {
   const champs = ["nom", "cuisine", "difficulte", "temps"];
 
@@ -67,4 +78,15 @@ function afficherErreurs(erreurs) {
     const zone = document.querySelector("#erreur-" + champ);
     zone.textContent = erreurs[champ] || "";
   });
+}
+const zoneSucces = document.querySelector("#message-succes");
+
+// Affiche un message vert pendant 3 secondes
+function afficherSucces(texte) {
+  zoneSucces.textContent = texte;
+  zoneSucces.hidden = false;
+
+  setTimeout(function () {
+    zoneSucces.hidden = true;
+  }, 3000);
 }

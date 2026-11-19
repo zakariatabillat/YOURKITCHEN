@@ -158,3 +158,14 @@ main {
   font-size: 16px;
   cursor: pointer;
 }
+#btn-ajouter:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#message-succes {
+  margin-top: 12px;
+  padding: 10px;
+  background: #dcfce7;
+  color: #166534;
+  border-radius: 6px;
+}
