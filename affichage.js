@@ -1,12 +1,14 @@
 const zoneRecettes = document.querySelector("#recettes");
 const zoneCompteur = document.querySelector("#compteur");
 const zoneAucunResultat = document.querySelector("#aucun-resultat");
+const zoneSucces = document.querySelector("#message-succes");
 
 const IMAGE_PAR_DEFAUT = "https://dummyjson.com/image/400x300?text=Nouvelle+recette";
 
 function creerCarte(recette) {
   const carte = document.createElement("article");
   carte.className = "carte";
+  carte.dataset.id = recette.id;
 
   const photo = document.createElement("img");
   photo.src = recette.image || IMAGE_PAR_DEFAUT;
@@ -24,11 +26,17 @@ function creerCarte(recette) {
   const temps = document.createElement("p");
   temps.textContent = "Préparation : " + recette.prepTimeMinutes + " min";
 
+  const btnSupprimer = document.createElement("button");
+  btnSupprimer.type = "button";
+  btnSupprimer.className = "btn-supprimer";
+  btnSupprimer.textContent = "Supprimer";
+
   carte.appendChild(photo);
   carte.appendChild(nom);
   carte.appendChild(cuisine);
   carte.appendChild(difficulte);
   carte.appendChild(temps);
+  carte.appendChild(btnSupprimer);
 
   return carte;
 }
@@ -61,7 +69,6 @@ function afficherRecettes(recettes) {
   afficherMessageVide(recettes.length);
 }
 
-// Place la nouvelle carte en tête de la grille
 function ajouterCarteEnPremier(recette) {
   const carte = creerCarte(recette);
   zoneRecettes.prepend(carte);
@@ -79,9 +86,7 @@ function afficherErreurs(erreurs) {
     zone.textContent = erreurs[champ] || "";
   });
 }
-const zoneSucces = document.querySelector("#message-succes");
 
-// Affiche un message vert pendant 3 secondes
 function afficherSucces(texte) {
   zoneSucces.textContent = texte;
   zoneSucces.hidden = false;
@@ -89,4 +94,13 @@ function afficherSucces(texte) {
   setTimeout(function () {
     zoneSucces.hidden = true;
   }, 3000);
+}
+
+// Retire une carte et met à jour le compteur
+function retirerCarte(carte) {
+  carte.remove();
+
+  const nombre = zoneRecettes.children.length;
+  afficherCompteur(nombre);
+  afficherMessageVide(nombre);
 }

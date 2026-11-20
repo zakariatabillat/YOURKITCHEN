@@ -169,3 +169,12 @@ main {
   color: #166534;
   border-radius: 6px;
 }
+.btn-supprimer {
+  margin: 0 12px 14px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #dc2626;
+  color: white;
+  cursor: pointer;
+}

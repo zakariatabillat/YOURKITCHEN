@@ -3,6 +3,7 @@ const champRecherche = document.querySelector("#champ-recherche");
 const btnToutes = document.querySelector("#btn-toutes");
 const formAjout = document.querySelector("#form-ajout");
 const btnAjouter = document.querySelector("#btn-ajouter");
+const grilleRecettes = document.querySelector("#recettes");
 
 async function chargerRecettes() {
   const data = await getRecettes();
@@ -48,7 +49,7 @@ async function envoyerFormulaire(event) {
   };
 
   btnAjouter.disabled = true;
-   try {
+  try {
     const data = await ajouterRecette(nouvelle);
     ajouterCarteEnPremier(data);
     formAjout.reset();
@@ -58,8 +59,28 @@ async function envoyerFormulaire(event) {
   }
 }
 
+// Un seul écouteur sur la grille pour tous les boutons Supprimer
+async function gererClicGrille(event) {
+  if (!event.target.classList.contains("btn-supprimer")) {
+    return;
+  }
+
+  const carte = event.target.closest(".carte");
+  const nom = carte.querySelector("h2").textContent;
+
+  const ok = confirm("Supprimer la recette « " + nom + " » ?");
+  if (!ok) {
+    return;
+  }
+
+  const data = await supprimerRecette(carte.dataset.id);
+  retirerCarte(carte);
+  afficherSucces("Recette « " + data.name + " » supprimée.");
+}
+
 formRecherche.addEventListener("submit", lancerRecherche);
 btnToutes.addEventListener("click", voirToutes);
 formAjout.addEventListener("submit", envoyerFormulaire);
+grilleRecettes.addEventListener("click", gererClicGrille);
 
 chargerRecettes();
