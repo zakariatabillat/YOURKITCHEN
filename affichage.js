@@ -104,3 +104,21 @@ function retirerCarte(carte) {
   afficherCompteur(nombre);
   afficherMessageVide(nombre);
 }
+
+const zoneChargement = document.querySelector("#chargement");
+
+function afficherChargement(visible) {
+  zoneChargement.hidden = !visible;
+}
+
+const zoneErreur = document.querySelector("#zone-erreur");
+const texteErreur = document.querySelector("#texte-erreur");
+
+function afficherErreur(texte) {
+  texteErreur.textContent = texte;
+  zoneErreur.hidden = false;
+}
+
+function cacherErreur() {
+  zoneErreur.hidden = true;
+}

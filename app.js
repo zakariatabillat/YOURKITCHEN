@@ -4,17 +4,39 @@ const btnToutes = document.querySelector("#btn-toutes");
 const formAjout = document.querySelector("#form-ajout");
 const btnAjouter = document.querySelector("#btn-ajouter");
 const grilleRecettes = document.querySelector("#recettes");
+const btnReessayer = document.querySelector("#btn-reessayer");
 
-async function chargerRecettes() {
-  const data = await getRecettes();
-  afficherRecettes(data.recipes);
+let derniereAction = null;
+
+// Lance une requête : loader, erreur, et mémoire pour Réessayer
+async function executer(action) {
+  derniereAction = action;
+  cacherErreur();
+  afficherChargement(true);
+  try {
+    await action();
+  } catch (error) {
+    afficherErreur(error.message);
+  } finally {
+    afficherChargement(false);
+  }
 }
 
-async function lancerRecherche(event) {
+function chargerRecettes() {
+  return executer(async function () {
+    const data = await getRecettes();
+    afficherRecettes(data.recipes);
+  });
+}
+
+function lancerRecherche(event) {
   event.preventDefault();
   const motCle = champRecherche.value.trim();
-  const data = await rechercherRecettes(motCle);
-  afficherRecettes(data.recipes);
+
+  executer(async function () {
+    const data = await rechercherRecettes(motCle);
+    afficherRecettes(data.recipes);
+  });
 }
 
 function voirToutes() {
@@ -49,18 +71,16 @@ async function envoyerFormulaire(event) {
   };
 
   btnAjouter.disabled = true;
-  try {
+  await executer(async function () {
     const data = await ajouterRecette(nouvelle);
     ajouterCarteEnPremier(data);
     formAjout.reset();
     afficherSucces("Recette « " + data.name + " » ajoutée avec succès.");
-  } finally {
-    btnAjouter.disabled = false;
-  }
+  });
+  btnAjouter.disabled = false;
 }
 
-// Un seul écouteur sur la grille pour tous les boutons Supprimer
-async function gererClicGrille(event) {
+function gererClicGrille(event) {
   if (!event.target.classList.contains("btn-supprimer")) {
     return;
   }
@@ -73,14 +93,24 @@ async function gererClicGrille(event) {
     return;
   }
 
-  const data = await supprimerRecette(carte.dataset.id);
-  retirerCarte(carte);
-  afficherSucces("Recette « " + data.name + " » supprimée.");
+  const id = carte.dataset.id;
+  executer(async function () {
+    const data = await supprimerRecette(id);
+    retirerCarte(carte);
+    afficherSucces("Recette « " + data.name + " » supprimée.");
+  });
+}
+
+function reessayer() {
+  if (derniereAction) {
+    executer(derniereAction);
+  }
 }
 
 formRecherche.addEventListener("submit", lancerRecherche);
 btnToutes.addEventListener("click", voirToutes);
 formAjout.addEventListener("submit", envoyerFormulaire);
 grilleRecettes.addEventListener("click", gererClicGrille);
+btnReessayer.addEventListener("click", reessayer);
 
 chargerRecettes();
